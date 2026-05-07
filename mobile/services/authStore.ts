@@ -18,9 +18,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   
   login: async () => {
     try {
-      alert('Google login - use web OAuth flow');
-      // For now, create a mock login for testing
-      // In production, use expo-auth-session with proper crypto support
+      // Mock login for testing (replace with real Google OAuth later)
       const mockUser = {
         id: 'test-user-id',
         email: 'test@mundial2026.com',
@@ -29,7 +27,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       };
       const mockToken = 'mock-jwt-token';
       set({ user: mockUser, token: mockToken, isAuthenticated: true });
-      alert('Mock login successful!');
+      alert('Login successful!');
     } catch (error: any) {
       console.error('Login error:', error);
       alert('Error: ' + error.message);
