@@ -1,0 +1,38 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Expo
+.expo/
+.expo-shared/
+.expo-*.json
+web-build/
+dist/
+
+# React Native
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Prisma
+*.db
+prisma/migrations/
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+build/
+dist/
