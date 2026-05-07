@@ -48,3 +48,9 @@ mundial2026/
 - Initial match calendar simulated manually
 - Service layer prepared for future API integration (SportRadar, API-FOOTBALL)
 - Results updated via backend (manual or automated)
+
+## Deployment (No local PC required)
+- **Backend**: Deploy to Render, Railway, or Heroku (free tiers available)
+- **Database**: Use Neon (PostgreSQL serverless) or Supabase (free PostgreSQL)
+- **Mobile**: Build with EAS (Expo Application Services) and publish to App Store/Play Store
+- **Environment Variables**: Set all secrets in deployment platform, never commit .env

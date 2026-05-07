@@ -1,7 +1,25 @@
 import axios from 'axios';
+import { useAuthStore } from './authStore';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
 
-export const getMatches = () => axios.get(`${API_URL}/api/matches`).then(r => r.data);
-export const getLeaderboard = () => axios.get(`${API_URL}/api/leaderboard`).then(r => r.data);
-export const createPrediction = (data: any) => axios.post(`${API_URL}/api/predictions`, data).then(r => r.data);
+const api = axios.create({
+  baseURL: API_URL,
+});
+
+// Add token to requests
+api.interceptors.request.use((config) => {
+  const token = useAuthStore.getState().token;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export const getMatches = (matchday?: number) => 
+  api.get(`/api/matches/${matchday || ''}`).then(r => r.data);
+export const getLeaderboard = () => api.get('/api/leaderboard').then(r => r.data);
+export const createPrediction = (data: any) => api.post('/api/predictions', data).then(r => r.data);
+export const getUserPredictions = (userId: string) => 
+  api.get(`/api/predictions/user/${userId}`).then(r => r.data);
+export const getProfile = () => api.get('/api/auth/profile').then(r => r.data);
