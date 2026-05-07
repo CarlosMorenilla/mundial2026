@@ -9,14 +9,22 @@ export default function Home() {
   const [isReady, setIsReady] = useState(false);
   
   useEffect(() => {
-    // Wait for layout to mount before navigating
-    const timer = setTimeout(() => setIsReady(true), 100);
+    // Esperar a que el layout se monte completamente
+    const timer = setTimeout(() => setIsReady(true), 500);
     return () => clearTimeout(timer);
   }, []);
   
   useEffect(() => {
     if (isReady && !isAuthenticated) {
-      router.replace('/login');
+      // Esperar un frame más para asegurar que el router está listo
+      const navTimer = setTimeout(() => {
+        try {
+          router.replace('/login');
+        } catch (e) {
+          console.log('Navigation not ready yet');
+        }
+      }, 100);
+      return () => clearTimeout(navTimer);
     }
   }, [isReady, isAuthenticated]);
   
