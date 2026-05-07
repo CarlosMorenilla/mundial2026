@@ -6,7 +6,7 @@ import axios from 'axios';
 WebBrowser.maybeCompleteAuthSession();
 
 const GOOGLE_CLIENT_ID = '87667049725-vd2dr4ei6d1qvg2f99fr476352bsp48s.apps.googleusercontent.com';
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://mundial2026-backend.onrender.com';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://mundial2026-pxdz.onrender.com';
 
 interface AuthState {
   user: any;
