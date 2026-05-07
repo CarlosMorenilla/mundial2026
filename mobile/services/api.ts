@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useAuthStore } from './authStore';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://mundial2026-backend.onrender.com';
 
 const api = axios.create({
   baseURL: API_URL,
