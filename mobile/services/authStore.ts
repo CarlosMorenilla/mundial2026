@@ -1,11 +1,6 @@
 import { create } from 'zustand';
-import * as AuthSession from 'expo-auth-session';
-import * as WebBrowser from 'expo-web-browser';
 import axios from 'axios';
 
-WebBrowser.maybeCompleteAuthSession();
-
-const GOOGLE_CLIENT_ID = '87667049725-vd2dr4ei6d1qvg2f99fr476352bsp48s.apps.googleusercontent.com';
 const API_URL = 'https://mundial2026-pxdz.onrender.com';
 
 interface AuthState {
@@ -23,31 +18,18 @@ export const useAuthStore = create<AuthState>((set) => ({
   
   login: async () => {
     try {
-      alert('Login pressed');
-      const redirectUri = AuthSession.makeRedirectUri({ useProxy: true });
-      
-      const request = new AuthSession.AuthRequest({
-        clientId: GOOGLE_CLIENT_ID,
-        scopes: ['profile', 'email'],
-        redirectUri,
-        responseType: AuthSession.ResponseType.IdToken,
-      });
-      
-      const result = await request.promptAsync({ useProxy: true });
-      
-      if (result.type === 'success') {
-        const { id_token } = result.params;
-        
-        const response = await axios.post(`${API_URL}/api/auth/google`, {
-          idToken: id_token
-        });
-        
-        const { user, token } = response.data;
-        set({ user, token, isAuthenticated: true });
-        alert('Login successful!');
-      } else {
-        alert('Auth cancelled: ' + result.type);
-      }
+      alert('Google login - use web OAuth flow');
+      // For now, create a mock login for testing
+      // In production, use expo-auth-session with proper crypto support
+      const mockUser = {
+        id: 'test-user-id',
+        email: 'test@mundial2026.com',
+        username: 'testuser',
+        avatarUrl: null
+      };
+      const mockToken = 'mock-jwt-token';
+      set({ user: mockUser, token: mockToken, isAuthenticated: true });
+      alert('Mock login successful!');
     } catch (error: any) {
       console.error('Login error:', error);
       alert('Error: ' + error.message);
