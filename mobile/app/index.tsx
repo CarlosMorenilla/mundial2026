@@ -9,14 +9,12 @@ export default function Home() {
   const [isReady, setIsReady] = useState(false);
   
   useEffect(() => {
-    // Esperar a que el layout se monte completamente
     const timer = setTimeout(() => setIsReady(true), 500);
     return () => clearTimeout(timer);
   }, []);
   
   useEffect(() => {
     if (isReady && !isAuthenticated) {
-      // Esperar un frame más para asegurar que el router está listo
       const navTimer = setTimeout(() => {
         try {
           router.replace('/login');

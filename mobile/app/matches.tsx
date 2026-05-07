@@ -10,14 +10,16 @@ export default function Matches() {
   const router = useRouter();
   
   useEffect(() => {
-    getMatches(matchday).then(setMatches);
+    getMatches(matchday).then(setMatches).catch(console.error);
   }, [matchday]);
   
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Matches - Matchday {matchday}</Text>
-      <Button title="Previous" onPress={() => setMatchday(Math.max(1, matchday - 1))} />
-      <Button title="Next" onPress={() => setMatchday(matchday + 1)} />
+      <View style={styles.buttonRow}>
+        <Button title="Previous" onPress={() => setMatchday(Math.max(1, matchday - 1))} />
+        <Button title="Next" onPress={() => setMatchday(matchday + 1)} />
+      </View>
       
       <FlatList
         data={matches}
@@ -45,5 +47,6 @@ export default function Matches() {
 const styles = StyleSheet.create({
   container: { padding: 20 },
   title: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
+  buttonRow: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 },
   matchItem: { padding: 10, borderBottomWidth: 1, borderColor: '#ccc' }
 });

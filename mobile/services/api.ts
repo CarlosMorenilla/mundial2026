@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { useAuthStore } from './authStore';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://mundial2026-pxdz.onrender.com';
+const API_URL = 'https://mundial2026-pxdz.onrender.com';
 
 const api = axios.create({
   baseURL: API_URL,
 });
 
-// Add token to requests
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
   if (token) {
