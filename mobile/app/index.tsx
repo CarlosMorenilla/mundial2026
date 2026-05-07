@@ -1,15 +1,32 @@
-import { useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '../services/authStore';
 
 export default function Home() {
   const { user, isAuthenticated } = useAuthStore();
   const router = useRouter();
+  const [isReady, setIsReady] = useState(false);
   
   useEffect(() => {
-    if (!isAuthenticated) router.replace('/login');
-  }, [isAuthenticated]);
+    // Wait for layout to mount before navigating
+    const timer = setTimeout(() => setIsReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+  
+  useEffect(() => {
+    if (isReady && !isAuthenticated) {
+      router.replace('/login');
+    }
+  }, [isReady, isAuthenticated]);
+  
+  if (!isReady) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   
   return (
     <View style={styles.container}>
