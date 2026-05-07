@@ -21,7 +21,7 @@ export const createPrediction = async (req: Request, res: Response) => {
     
     console.log('Prediction saved:', prediction);
     res.json(prediction);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in createPrediction:', error);
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
@@ -32,7 +32,7 @@ export const getUserPredictions = async (req: Request, res: Response) => {
     const { userId } = req.params;
     const predictions = await prisma.prediction.findMany({ where: { userId } });
     res.json(predictions);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in getUserPredictions:', error);
     res.status(500).json({ error: 'Internal server error' });
   }

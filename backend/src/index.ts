@@ -5,7 +5,6 @@ import { authRoutes } from './routes/auth';
 import { matchRoutes } from './routes/matches';
 import { predictionRoutes } from './routes/predictions';
 import { leaderboardRoutes } from './routes/leaderboard';
-import { authMiddleware } from './middleware/auth';
 
 dotenv.config();
 
@@ -17,7 +16,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/matches', matchRoutes);
-app.use('/api/predictions', predictionRoutes); // auth disabled for testing
+app.use('/api/predictions', predictionRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 
 app.listen(PORT, () => {
