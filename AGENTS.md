@@ -32,10 +32,15 @@ mundial2026/
 └── README.md
 ```
 
+## Live URLs
+- **Backend API**: https://mundial2026-pxdz.onrender.com
+- **GitHub**: https://github.com/CarlosMorenilla/mundial2026
+- **Database**: Neon PostgreSQL (eu-central-1)
+
 ## Key Commands
 - **Mobile**: `cd mobile && npx expo start`
 - **Backend**: `cd backend && npm run dev`
-- **Prisma**: `npx prisma migrate dev` (from backend)
+- **Prisma**: `npx prisma migrate dev --schema=../prisma/schema.prisma` (from backend)
 
 ## Security Notes
 - All secrets in `.env` (never commit)
