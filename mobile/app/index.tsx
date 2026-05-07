@@ -1,14 +1,36 @@
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '../services/authStore';
 
 export default function Home() {
   const { user, isAuthenticated } = useAuthStore();
   const router = useRouter();
+  const [isReady, setIsReady] = useState(false);
   
-  if (!isAuthenticated) {
-    router.replace('/login');
-    return null;
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+  
+  useEffect(() => {
+    if (isReady && !isAuthenticated) {
+      setTimeout(() => {
+        try {
+          router.replace('/login');
+        } catch (e) {
+          console.log('Navigation not ready');
+        }
+      }, 100);
+    }
+  }, [isReady, isAuthenticated]);
+  
+  if (!isReady) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
   
   return (
