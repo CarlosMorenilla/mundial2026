@@ -6,17 +6,17 @@ import { useAuthStore } from '../services/authStore';
 export default function Login() {
   const { login, isAuthenticated } = useAuthStore();
   const router = useRouter();
-  
+
   useEffect(() => {
     if (isAuthenticated) {
       router.replace('/');
     }
   }, [isAuthenticated]);
-  
+
   const handleLogin = async () => {
     await login();
   };
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mundial2026 Login</Text>
