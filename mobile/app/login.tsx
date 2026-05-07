@@ -1,27 +1,13 @@
-import { useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useAuthStore } from '../services/authStore';
 
 export default function Login() {
-  const { login, isAuthenticated } = useAuthStore();
-  const router = useRouter();
-  
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.replace('/');
-    }
-  }, [isAuthenticated]);
-  
-  const handleLogin = async () => {
-    await login();
-    router.replace('/');
-  };
+  const { login } = useAuthStore();
   
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mundial2026 Login</Text>
-      <Button title="Sign in with Google" onPress={handleLogin} />
+      <Button title="Sign in with Google" onPress={login} />
     </View>
   );
 }
