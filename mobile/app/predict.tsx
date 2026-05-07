@@ -8,9 +8,8 @@ export default function Predict() {
   const { matchId, homeTeam, awayTeam } = useLocalSearchParams();
   const { user } = useAuthStore();
   const [predictedWinner, setPredictedWinner] = useState('home');
-  const [homeScore, setHomeScore] = useState('0');
-  const [awayScore, setAwayScore] = useState('0');
-  const [saving, setSaving] = useState(false);
+  const [homeScore, setHomeScore] = useState(0);
+  const [awayScore, setAwayScore] = useState(0);
   
   const handlePredict = async () => {
     if (!user?.id || !matchId) {
@@ -18,21 +17,18 @@ export default function Predict() {
       return;
     }
     
-    setSaving(true);
     try {
       await createPrediction({
         userId: user.id,
         matchId,
         predictedWinner,
-        predictedHomeScore: parseInt(homeScore),
-        predictedAwayScore: parseInt(awayScore)
+        predictedHomeScore: homeScore,
+        predictedAwayScore: awayScore
       });
       alert('Prediction saved!');
     } catch (error: any) {
       console.error('Error saving prediction:', error);
-      alert('Error saving prediction');
-    } finally {
-      setSaving(false);
+      alert('Error saving prediction: ' + error.message);
     }
   };
   
@@ -45,36 +41,29 @@ export default function Predict() {
         <Button 
           title={homeTeam as string} 
           onPress={() => setPredictedWinner('home')}
-          color={predictedWinner === 'home' ? '#007AFF' : '#666'}
         />
         <Button 
           title="Draw" 
           onPress={() => setPredictedWinner('draw')}
-          color={predictedWinner === 'draw' ? '#007AFF' : '#666'}
         />
         <Button 
           title={awayTeam as string} 
           onPress={() => setPredictedWinner('away')}
-          color={predictedWinner === 'away' ? '#007AFF' : '#666'}
         />
       </View>
       
       <Text style={styles.label}>Score:</Text>
       <View style={styles.scoreContainer}>
-        <Button title="-" onPress={() => setHomeScore(Math.max(0, parseInt(homeScore) - 1).toString())} />
+        <Button title="-" onPress={() => setHomeScore(Math.max(0, homeScore - 1))} />
         <Text style={styles.score}>{homeScore}</Text>
-        <Button title="+" onPress={() => setHomeScore((parseInt(homeScore) + 1).toString())} />
+        <Button title="+" onPress={() => setHomeScore(homeScore + 1)} />
         <Text style={styles.score}>vs</Text>
-        <Button title="-" onPress={() => setAwayScore(Math.max(0, parseInt(awayScore) - 1).toString())} />
+        <Button title="-" onPress={() => setAwayScore(Math.max(0, awayScore - 1))} />
         <Text style={styles.score}>{awayScore}</Text>
-        <Button title="+" onPress={() => setAwayScore((parseInt(awayScore) + 1).toString())} />
+        <Button title="+" onPress={() => setAwayScore(awayScore + 1)} />
       </View>
       
-      <Button 
-        title={saving ? "Saving..." : "Save Prediction"} 
-        onPress={handlePredict} 
-        disabled={saving} 
-      />
+      <Button title="Save Prediction" onPress={handlePredict} />
     </View>
   );
 }
@@ -85,5 +74,5 @@ const styles = StyleSheet.create({
   label: { fontSize: 16, marginTop: 20, marginBottom: 10 },
   buttonGroup: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 20 },
   scoreContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginBottom: 20 },
-  score: { fontSize: 24, fontWeight: 'bold', marginHorizontal: 10 },
+  score: { fontSize: 24, fontWeight: 'bold', marginHorizontal: 10 }
 });

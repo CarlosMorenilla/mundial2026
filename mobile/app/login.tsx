@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '../services/authStore';
@@ -6,16 +7,14 @@ export default function Login() {
   const { login, isAuthenticated } = useAuthStore();
   const router = useRouter();
   
-  // Navigate to home if already authenticated
-  if (isAuthenticated) {
-    router.replace('/');
-    return null;
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/');
+    }
+  }, [isAuthenticated]);
   
   const handleLogin = async () => {
     await login();
-    // After login, navigate to home
-    router.replace('/');
   };
   
   return (
