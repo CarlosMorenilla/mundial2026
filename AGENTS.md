@@ -36,11 +36,22 @@ mundial2026/
 - **Backend API**: https://mundial2026-pxdz.onrender.com
 - **GitHub**: https://github.com/CarlosMorenilla/mundial2026
 - **Database**: Neon PostgreSQL (eu-central-1)
+- **Mobile**: Use Expo Go on iPhone, connect via Safari to `http://10.0.1.252:8081`
+
+## Current Status (2026-05-07)
+✅ Backend deployed on Render (auto-deploys from GitHub)
+✅ Database populated with 18 World Cup 2026 matches (Groups A, B, C)
+✅ Mobile app connects to real backend
+✅ Matches screen shows real data from Neon
+✅ Predictions can be saved (auth disabled for testing)
+✅ Leaderboard ready for real data
+✅ Mock login working (Google OAuth pending)
 
 ## Key Commands
-- **Mobile**: `cd mobile && npx expo start`
-- **Backend**: `cd backend && npm run dev`
-- **Prisma**: `npx prisma migrate dev --schema=../prisma/schema.prisma` (from backend)
+- **Mobile**: `cd mobile && npx expo start --host lan -c`
+- **Backend**: Auto-deployed via GitHub push
+- **Seed database**: `cd backend && node ../prisma/seed.js`
+- **View data**: Visit https://mundial2026-pxdz.onrender.com/api/matches
 
 ## Security Notes
 - All secrets in `.env` (never commit)
